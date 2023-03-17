@@ -24,3 +24,7 @@ def get_env_var(name):
         return int(value) if re.match("\d+$", value) else value
     else:
         logging.info('Unknown environment variable requested: {}'.format(name))
+
+
+def get_cmd_arg_or_env_var(name):
+    return get_cmd_arg(name) or get_env_var(name)

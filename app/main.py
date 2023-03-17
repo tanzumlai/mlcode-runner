@@ -2,8 +2,9 @@ import mlflow
 import logging
 from mlflow import MlflowClient
 import traceback
-import utils
+from . import utils
 import os
+import sys
 
 
 def get_root_run(active_run_id=None, experiment_names=None):
@@ -20,11 +21,12 @@ def get_root_run(active_run_id=None, experiment_names=None):
 
 try:
     logging.getLogger().setLevel(logging.INFO)
-    git_repo = utils.get_cmd_arg("git_repo")
-    entry_point = utils.get_cmd_arg("mlflow_entry")
-    stage = utils.get_cmd_arg("mlflow_stage")
-    environment_name = utils.get_cmd_arg("environment_name")
-    experiment_name = utils.get_cmd_arg('experiment_name')
+    client = MlflowClient()
+    git_repo = utils.get_cmd_arg_or_env_var("git_repo")
+    entry_point = utils.get_cmd_arg_or_env_var("mlflow_entry")
+    stage = utils.get_cmd_arg_or_env_var("mlflow_stage")
+    environment_name = utils.get_cmd_arg_or_env_var("environment_name")
+    experiment_name = utils.get_cmd_arg_or_env_var('experiment_name')
     os.environ['MLFLOW_EXPERIMENT_NAME'] = experiment_name
     logging.info(
         f"Printing the arguments...git_repo={git_repo},experiment_name={experiment_name},entry_point={entry_point},stage={stage}")
@@ -43,16 +45,17 @@ try:
 
 except mlflow.exceptions.RestException as e:
     logging.info('REST exception occurred (platform will retry based on pre-configured retry policy): ', exc_info=True)
-    traceback.print_exc()
+    logging.info(''.join(traceback.TracebackException.from_exception(e).format()))
 
 except mlflow.exceptions.ExecutionException as ee:
     logging.info("An ExecutionException occurred...", exc_info=True)
     logging.info(str(ee))
-    traceback.print_exc()
+    logging.info(''.join(traceback.TracebackException.from_exception(ee).format()))
 
 except BaseException as be:
     logging.info("An unexpected error occurred...", exc_info=True)
     logging.info(str(be))
-    traceback.print_exc()
+    logging.info(traceback.format_exc())
+    logging.info(''.join(traceback.TracebackException.from_exception(be).format()))
 
 logging.info("End script.")
