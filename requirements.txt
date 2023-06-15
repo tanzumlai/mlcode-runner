@@ -33,7 +33,7 @@ tensorflow
 rsocket
 # asyncio
 python-snappy
-mlflow==2.0.1
+mlflow==2.4.1
 filelock==3.9.0
 pyarrow<7.0.0
 hickle
@@ -42,3 +42,4 @@ python-multipart
 evidently
 pysqlite3-binary
 kfp
+download_and_extract
