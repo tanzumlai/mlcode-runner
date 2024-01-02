@@ -1,10 +1,12 @@
+import sys
+import importlib.metadata
+sys.modules['importlib_metadata'] = importlib.metadata
 import mlflow
 import logging
 from mlflow import MlflowClient
 import traceback
 from . import utils
 import os
-import sys
 
 
 def get_root_run(active_run_id=None, experiment_names=None):
