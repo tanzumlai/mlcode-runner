@@ -13,5 +13,5 @@ Get the IP address for the App Accelerator API: kubectl get service -n accelerat
 Publish Accelerators:
 ```
 tanzu plugin install --local <path-to-tanzu-cli> all
-tanzu acc create mlflowrunner --git-repository https://github.com/tanzumlai/mlcode-runner.git --git-branch main
+tanzu acc create mlcoderunner --git-repository https://github.com/tanzumlai/mlcode-runner.git --git-branch main
 ```
