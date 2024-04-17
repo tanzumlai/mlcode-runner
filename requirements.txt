@@ -39,7 +39,8 @@ pyarrow<7.0.0
 hickle
 find-libpython
 python-multipart
-evidently
+evidently==0.4.16
 pysqlite3-binary
-kfp
+kfp==2.5.0
 download_and_extract
+pydantic==2.6.0
